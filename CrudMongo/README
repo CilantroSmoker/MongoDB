@@ -1,6 +1,6 @@
 # 🚗 Automotora CRUD - Django + MongoDB
 
-CRUD de vehículos desarrollado con Django y MongoDB usando djongo como conector.
+CRUD de vehículos desarrollado con Django y MongoDB usando pymongo como conector.
 
 ---
 
@@ -20,42 +20,55 @@ CRUD de vehículos desarrollado con Django y MongoDB usando djongo como conector
 cd CrudMongo
 ```
 
-### 2. Instalar dependencias
+### 2. Crear y activar entorno virtual
 
 ```bash
-pip install django==3.2 pymongo==3.12.3 sqlparse==0.2.4 djongo
+python -m venv .venv
+.venv\Scripts\activate
 ```
 
-### 3. Configurar la base de datos
+### 3. Instalar dependencias
+
+```bash
+pip install django pymongo
+```
+
+### 4. Configurar la base de datos
 
 En `CrudMongo/settings.py` asegúrate de tener:
 
 ```python
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'CrudMongo',
-        'CLIENT': {
-            'host': 'mongodb://localhost:27017',
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 ```
 
-### 4. Aplicar migraciones
+La conexión a MongoDB se configura en `mongoapp/models.py`:
+
+```python
+from pymongo import MongoClient
+
+client = MongoClient('mongodb://localhost:27017/')
+db = client['automotora']
+vehiculos_collection = db['vehiculos']
+```
+
+### 5. Aplicar migraciones
 
 ```bash
-python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 5. Correr el servidor
+### 6. Correr el servidor
 
 ```bash
 python manage.py runserver
 ```
 
-### 6. Abrir en el navegador
+### 7. Abrir en el navegador
 http://127.0.0.1:8000/vehiculos/
 
 ## 📁 Estructura del proyecto
@@ -82,30 +95,32 @@ CrudMongo/
 
 ## 🗄️ Modelo de datos
 
-| Campo  | Tipo        | Descripción              |
-|--------|-------------|--------------------------|
-| make   | CharField   | Marca del vehículo       |
-| model  | CharField   | Modelo del vehículo      |
-| price  | DecimalField| Precio                   |
-| color  | CharField   | Color                    |
-| year   | IntegerField| Año                      |
-| status | CharField   | disponible/vendido/reservado |
+| Campo  | Tipo    | Descripción                          |
+|--------|---------|--------------------------------------|
+| _id    | ObjectId| ID automático generado por MongoDB   |
+| make   | String  | Marca del vehículo                   |
+| model  | String  | Modelo del vehículo                  |
+| price  | Number  | Precio                               |
+| color  | String  | Color                                |
+| year   | Number  | Año                                  |
+| status | String  | disponible / vendido / reservado     |
 
 ---
 
 ## 🔧 Operaciones CRUD
 
-| Acción   | URL                        |
-|----------|----------------------------|
-| Listar   | /vehiculos/                |
-| Crear    | /vehiculos/crear/          |
-| Editar   | /vehiculos/<id>/editar/    |
-| Eliminar | /vehiculos/<id>/eliminar/  |
+| Acción   | URL                          |
+|----------|------------------------------|
+| Listar   | /vehiculos/                  |
+| Crear    | /vehiculos/crear/            |
+| Editar   | /vehiculos/<id>/editar/      |
+| Eliminar | /vehiculos/<id>/eliminar/    |
 
 ---
 
 ## ⚠️ Notas importantes
 
-- djongo solo es compatible con Django 3.2 y pymongo 3.12.3
+- Los datos se guardan en MongoDB, SQLite solo es requerido internamente por Django
 - Asegúrate de que MongoDB esté corriendo antes de iniciar el servidor
 - La base de datos en MongoDB se llama `automotora` y la colección `vehiculos`
+- Los IDs son generados automáticamente por MongoDB como ObjectId

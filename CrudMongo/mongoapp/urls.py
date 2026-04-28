@@ -2,8 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.VehiculoListView.as_view(), name='vehiculo-list'),
-    path('crear/', views.VehiculoCreateView.as_view(), name='vehiculo-create'),
-    path('<int:pk>/editar/', views.VehiculoUpdateView.as_view(), name='vehiculo-update'),
-    path('<int:pk>/eliminar/', views.VehiculoDeleteView.as_view(), name='vehiculo-delete'),
+    path('', views.vehiculo_list, name='vehiculo-list'),
+    path('crear/', views.vehiculo_create, name='vehiculo-create'),
+    path('<str:pk>/editar/', views.vehiculo_update, name='vehiculo-update'),
+    path('<str:pk>/eliminar/', views.vehiculo_delete, name='vehiculo-delete'),
 ]

@@ -36,12 +36,14 @@
                     <td>${{ vehiculo.price }}</td>
                     <td>
                         <span class="badge badge-{{ vehiculo.status }}">
-                            {{ vehiculo.get_status_display }}
+                            {{ vehiculo.status }}
                         </span>
                     </td>
                     <td>
-                        <a href="{% url 'vehiculo-update' vehiculo.pk %}" class="btn btn-warning">Editar</a>
-                        <a href="{% url 'vehiculo-delete' vehiculo.pk %}" class="btn btn-danger">Eliminar</a>
+                        {% if vehiculo.id %}
+                            <a href="{% url 'vehiculo-update' vehiculo.id %}" class="btn btn-warning">Editar</a>
+                            <a href="{% url 'vehiculo-delete' vehiculo.id %}" class="btn btn-danger">Eliminar</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% empty %}
