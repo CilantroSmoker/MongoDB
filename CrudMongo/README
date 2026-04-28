@@ -16,35 +16,30 @@ CRUD de vehículos desarrollado con Django y MongoDB usando pymongo como conecto
 
 ### 1. Clonar o descargar el proyecto
 
-```bash
 cd CrudMongo
-```
+
 
 ### 2. Crear y activar entorno virtual
 
-```bash
 python -m venv .venv
 .venv\Scripts\activate
-```
 
 ### 3. Instalar dependencias
 
-```bash
 pip install django pymongo
-```
 
 ### 4. Configurar la base de datos
 
 En `CrudMongo/settings.py` asegúrate de tener:
 
-```python
+python
+------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-```
 
 La conexión a MongoDB se configura en `mongoapp/models.py`:
 
@@ -54,19 +49,15 @@ from pymongo import MongoClient
 client = MongoClient('mongodb://localhost:27017/')
 db = client['automotora']
 vehiculos_collection = db['vehiculos']
-```
 
 ### 5. Aplicar migraciones
 
-```bash
 python manage.py migrate
-```
+
 
 ### 6. Correr el servidor
 
-```bash
 python manage.py runserver
-```
 
 ### 7. Abrir en el navegador
 http://127.0.0.1:8000/vehiculos/
