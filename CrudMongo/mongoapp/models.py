@@ -1,4 +1,4 @@
-from djongo import models
+from django import models
 
 STATUS_CHOICES = [
     ('disponible', 'Disponible'),
@@ -18,4 +18,4 @@ class Vehiculo(models.Model):
         return f"{self.year} {self.make} {self.model}"
 
     class Meta:
-        collection = 'vehiculos'
+        db_table  = 'vehiculos'

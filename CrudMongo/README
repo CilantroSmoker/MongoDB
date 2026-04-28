@@ -1,0 +1,111 @@
+# 🚗 Automotora CRUD - Django + MongoDB
+
+CRUD de vehículos desarrollado con Django y MongoDB usando djongo como conector.
+
+---
+
+## 📋 Requisitos
+
+- Python 3.12
+- MongoDB instalado y corriendo en localhost
+- MongoDB Compass (opcional, para visualizar los datos)
+
+---
+
+## ⚙️ Instalación
+
+### 1. Clonar o descargar el proyecto
+
+```bash
+cd CrudMongo
+```
+
+### 2. Instalar dependencias
+
+```bash
+pip install django==3.2 pymongo==3.12.3 sqlparse==0.2.4 djongo
+```
+
+### 3. Configurar la base de datos
+
+En `CrudMongo/settings.py` asegúrate de tener:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'CrudMongo',
+        'CLIENT': {
+            'host': 'mongodb://localhost:27017',
+        }
+    }
+}
+```
+
+### 4. Aplicar migraciones
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### 5. Correr el servidor
+
+```bash
+python manage.py runserver
+```
+
+### 6. Abrir en el navegador
+http://127.0.0.1:8000/vehiculos/
+
+## 📁 Estructura del proyecto
+CrudMongo/
+├── CrudMongo/
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── mongoapp/
+│   ├── templates/
+│   │   └── mongoapp/
+│   │       ├── vehiculo_list.html
+│   │       ├── vehiculo_form.html
+│   │       └── vehiculo_confirm_delete.html
+│   ├── static/
+│   │   └── mongoapp/
+│   │       └── style.css
+│   ├── models.py
+│   ├── views.py
+│   └── urls.py
+└── manage.py
+
+---
+
+## 🗄️ Modelo de datos
+
+| Campo  | Tipo        | Descripción              |
+|--------|-------------|--------------------------|
+| make   | CharField   | Marca del vehículo       |
+| model  | CharField   | Modelo del vehículo      |
+| price  | DecimalField| Precio                   |
+| color  | CharField   | Color                    |
+| year   | IntegerField| Año                      |
+| status | CharField   | disponible/vendido/reservado |
+
+---
+
+## 🔧 Operaciones CRUD
+
+| Acción   | URL                        |
+|----------|----------------------------|
+| Listar   | /vehiculos/                |
+| Crear    | /vehiculos/crear/          |
+| Editar   | /vehiculos/<id>/editar/    |
+| Eliminar | /vehiculos/<id>/eliminar/  |
+
+---
+
+## ⚠️ Notas importantes
+
+- djongo solo es compatible con Django 3.2 y pymongo 3.12.3
+- Asegúrate de que MongoDB esté corriendo antes de iniciar el servidor
+- La base de datos en MongoDB se llama `automotora` y la colección `vehiculos`

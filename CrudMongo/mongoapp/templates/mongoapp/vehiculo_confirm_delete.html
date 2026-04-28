@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar Vehículo</title>
+    <link rel="stylesheet" href="{% static 'mongoapp/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>¿Eliminar vehículo?</h1>
+        <p>¿Estás seguro que deseas eliminar <strong>{{ object }}</strong>?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+            <a href="{% url 'vehiculo-list' %}" class="btn btn-primary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
