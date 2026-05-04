@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if vehiculo %}Editar{% else %}Agregar{% endif %} Vehículo</title>
+    <link rel="stylesheet" href="{% static 'mongoapp/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-wrap">
+            <div class="page-header">
+                <span class="header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 12h18M5 8l1-2h12l1 2M6 12v6h2v-4h8v4h2v-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <h1>{% if vehiculo %}Editar Vehículo{% else %}Agregar Vehículo{% endif %}</h1>
+                <div class="gold-line"></div>
+                <p class="page-subtitle">Completa los datos del vehículo y mantén tu inventario profesional y listo para mostrar.</p>
+            </div>
+
+            <div class="form-info">
+                <p>Los campos marcados con * son obligatorios. Cada registro puede guardarse en segundos y mostrarse inmediatamente en el panel.</p>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="field-grid">
+                    <p class="field-row">
+                        <label>Marca *</label>
+                        <input type="text" name="make" value="{{ vehiculo.make }}" required>
+                    </p>
+                    <p class="field-row">
+                        <label>Modelo *</label>
+                        <input type="text" name="model" value="{{ vehiculo.model }}" required>
+                    </p>
+                    <p class="field-row">
+                        <label>Precio *</label>
+                        <input type="number" name="price" step="0.01" value="{{ vehiculo.price }}" required>
+                    </p>
+                    <p class="field-row">
+                        <label>Color *</label>
+                        <input type="text" name="color" value="{{ vehiculo.color }}" required>
+                    </p>
+                    <p class="field-row">
+                        <label>Año *</label>
+                        <input type="number" name="year" value="{{ vehiculo.year }}" required>
+                    </p>
+                    <p class="field-row">
+                        <label>Estado *</label>
+                        <select name="status">
+                            <option value="disponible" {% if vehiculo.status == 'disponible' %}selected{% endif %}>Disponible</option>
+                            <option value="vendido" {% if vehiculo.status == 'vendido' %}selected{% endif %}>Vendido</option>
+                            <option value="reservado" {% if vehiculo.status == 'reservado' %}selected{% endif %}>Reservado</option>
+                        </select>
+                    </p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="{% url 'vehiculo-list' %}" class="btn btn-danger">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
