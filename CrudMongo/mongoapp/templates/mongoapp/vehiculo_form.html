@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if vehiculo %}Editar{% else %}Agregar{% endif %} Vehículo</title>
+    <link rel="stylesheet" href="{% static 'mongoapp/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>{% if vehiculo %}Editar Vehículo{% else %}Agregar Vehículo{% endif %}</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                <label>Marca</label>
+                <input type="text" name="make" value="{{ vehiculo.make }}" required>
+            </p>
+            <p>
+                <label>Modelo</label>
+                <input type="text" name="model" value="{{ vehiculo.model }}" required>
+            </p>
+            <p>
+                <label>Precio</label>
+                <input type="number" name="price" step="0.01" value="{{ vehiculo.price }}" required>
+            </p>
+            <p>
+                <label>Color</label>
+                <input type="text" name="color" value="{{ vehiculo.color }}" required>
+            </p>
+            <p>
+                <label>Año</label>
+                <input type="number" name="year" value="{{ vehiculo.year }}" required>
+            </p>
+            <p>
+                <label>Estado</label>
+                <select name="status">
+                    <option value="disponible" {% if vehiculo.status == 'disponible' %}selected{% endif %}>Disponible</option>
+                    <option value="vendido" {% if vehiculo.status == 'vendido' %}selected{% endif %}>Vendido</option>
+                    <option value="reservado" {% if vehiculo.status == 'reservado' %}selected{% endif %}>Reservado</option>
+                </select>
+            </p>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{% url 'vehiculo-list' %}" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

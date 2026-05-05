@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Automotora - Vehículos</title>
+    <link rel="stylesheet" href="{% static 'mongoapp/style.css' %}">
+</head>
+<body>
+    <div class="container">
+
+        <div class="lux-hero">
+            <div class="hero-bg-img"></div>
+            <div class="hero-overlay"></div>
+            <div class="lux-brand">
+                <div class="lux-brand-name">AUTOMOTORA</div>
+                <div class="gold-line"></div>
+                <div class="lux-brand-sub">Vehículos de Excelencia</div>
+            </div>
+        </div>
+
+        <div class="car-bg-center">
+            <div class="car-bg-img"></div>
+        </div>
+
+        <div class="lux-body">
+            <div class="lux-topbar">
+                <div class="lux-stats">
+                    <div class="lux-stat">
+                        <div class="lux-stat-n">{{ vehiculos|length }}</div>
+                        <div class="lux-stat-l">Total</div>
+                    </div>
+                    <div class="stat-sep"></div>
+                    <div class="lux-stat">
+                        <div class="lux-stat-n" style="color:#4ade80">{{ disponibles }}</div>
+                        <div class="lux-stat-l">Disponibles</div>
+                    </div>
+                    <div class="stat-sep"></div>
+                    <div class="lux-stat">
+                        <div class="lux-stat-n" style="color:#f87171">{{ vendidos }}</div>
+                        <div class="lux-stat-l">Vendidos</div>
+                    </div>
+                </div>
+                <a href="{% url 'vehiculo-create' %}" class="btn">+ Agregar Vehículo</a>
+            </div>
+
+            <div class="lux-divider"></div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Año</th>
+                            <th>Color</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for vehiculo in vehiculos %}
+                        <tr>
+                            <td class="make-cell">{{ vehiculo.make }}</td>
+                            <td>{{ vehiculo.model }}</td>
+                            <td>{{ vehiculo.year }}</td>
+                            <td>{{ vehiculo.color }}</td>
+                            <td class="price-cell">${{ vehiculo.price }}</td>
+                            <td>
+                                <span class="badge badge-{{ vehiculo.status }}">
+                                    {{ vehiculo.status }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if vehiculo.id %}
+                                <a href="{% url 'vehiculo-update' vehiculo.id %}" class="btn btn-warning">Editar</a>
+                                <a href="{% url 'vehiculo-delete' vehiculo.id %}" class="btn btn-danger">Eliminar</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" style="text-align:center; padding:40px; color:#4a3f1e; letter-spacing:2px; font-size:11px;">
+                                NO HAY VEHÍCULOS REGISTRADOS
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+# 🚗 Automotora CRUD - Django + MongoDB
+
+CRUD de vehículos desarrollado con Django y MongoDB usando pymongo como conector.
+
+---
+
+## 📋 Requisitos
+
+- Python 3.12
+- MongoDB instalado y corriendo en localhost
+- MongoDB Compass (opcional, para visualizar los datos)
+
+---
+
+## ⚙️ Instalación
+
+### 1. Clonar o descargar el proyecto
+
+cd CrudMongo
+
+
+### 2. Crear y activar entorno virtual
+
+python -m venv .venv
+.venv\Scripts\activate
+
+### 3. Instalar dependencias
+
+pip install django pymongo
+
+### 4. Configurar la base de datos
+
+En `CrudMongo/settings.py` asegúrate de tener:
+
+python
+------------
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+La conexión a MongoDB se configura en `mongoapp/models.py`:
+
+```python
+from pymongo import MongoClient
+
+client = MongoClient('mongodb://localhost:27017/')
+db = client['automotora']
+vehiculos_collection = db['vehiculos']
+
+### 5. Aplicar migraciones
+
+python manage.py migrate
+
+
+### 6. Correr el servidor
+
+python manage.py runserver
+
+### 7. Abrir en el navegador
+http://127.0.0.1:8000/vehiculos/
+
+## 📁 Estructura del proyecto
+CrudMongo/
+├── CrudMongo/
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── mongoapp/
+│   ├── templates/
+│   │   └── mongoapp/
+│   │       ├── vehiculo_list.html
+│   │       ├── vehiculo_form.html
+│   │       └── vehiculo_confirm_delete.html
+│   ├── static/
+│   │   └── mongoapp/
+│   │       └── style.css
+│   ├── models.py
+│   ├── views.py
+│   └── urls.py
+└── manage.py
+
+---
+
+## 🗄️ Modelo de datos
+
+| Campo  | Tipo    | Descripción                          |
+|--------|---------|--------------------------------------|
+| _id    | ObjectId| ID automático generado por MongoDB   |
+| make   | String  | Marca del vehículo                   |
+| model  | String  | Modelo del vehículo                  |
+| price  | Number  | Precio                               |
+| color  | String  | Color                                |
+| year   | Number  | Año                                  |
+| status | String  | disponible / vendido / reservado     |
+
+---
+
+## 🔧 Operaciones CRUD
+
+| Acción   | URL                          |
+|----------|------------------------------|
+| Listar   | /vehiculos/                  |
+| Crear    | /vehiculos/crear/            |
+| Editar   | /vehiculos/<id>/editar/      |
+| Eliminar | /vehiculos/<id>/eliminar/    |
+
+---
+
+## ⚠️ Notas importantes
+
+- Los datos se guardan en MongoDB, SQLite solo es requerido internamente por Django
+- Asegúrate de que MongoDB esté corriendo antes de iniciar el servidor
+- La base de datos en MongoDB se llama `automotora` y la colección `vehiculos`
+- Los IDs son generados automáticamente por MongoDB como ObjectId
